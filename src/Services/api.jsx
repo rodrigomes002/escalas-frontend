@@ -24,3 +24,15 @@ export function USER_GET(token) {
     },
   };
 }
+
+export function TOKEN_VALIDATE_POST(token) {
+  return {
+    url: API_URL + "api/token",
+    options: {
+      method: "POST",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    },
+  };
+}
