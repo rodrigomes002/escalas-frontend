@@ -25,9 +25,8 @@ const Home = () => {
         <div className={styles.home}>
           <Card style={cardStyle} setModal={setModal} />
         </div>
-
-        <div>{modal && <Modal data={dados} setModal={setModal}></Modal>}</div>
       </div>
+      <div>{modal && <Modal data={dados} setModal={setModal}></Modal>}</div>
     </>
   );
 };

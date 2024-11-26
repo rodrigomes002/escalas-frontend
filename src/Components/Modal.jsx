@@ -9,7 +9,23 @@ const Modal = ({ data, setModal }) => {
   return (
     <>
       <div className={styles.modal} onClick={handleOutsideClick}>
-        <div>TESTE aaa</div>
+        <div className={styles.content}>
+          <div>
+            <h2>Participantes</h2>
+          </div>
+          <div>
+            <ul>
+              <li>Rodrigo</li>
+              <li>Rodrigo</li>
+              <li>Rodrigo</li>
+              <li>Rodrigo</li>
+              <li>Rodrigo</li>
+              <li>Rodrigo</li>
+              <li>Rodrigo</li>
+              <li>Rodrigo</li>
+            </ul>
+          </div>
+        </div>
       </div>
     </>
   );
