@@ -1,0 +1,22 @@
+.title {
+  padding-top: 50px;
+}
+
+.home {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@media (max-width: 40rem) {
+  .home {
+    justify-content: space-around;
+  }
+}

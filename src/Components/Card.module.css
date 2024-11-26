@@ -1,0 +1,23 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  width: 150px;
+  height: 150px;
+  margin-top: 50px;
+  border-radius: 4px;
+  background-color: #e5e4e4;
+}
+
+.date {
+  position: relative;
+  bottom: 15px;
+  left: 70px;
+  width: 50px;
+}
+
+.margin {
+  margin-bottom: 15px;
+}
