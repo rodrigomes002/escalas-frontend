@@ -25,6 +25,10 @@ li {
   margin: 0px;
 }
 
+.title {
+  padding-top: 50px;
+}
+
 /* imagens responsiva*/
 img {
   display: block;

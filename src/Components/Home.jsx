@@ -10,13 +10,13 @@ import { useNavigate } from "react-router-dom";
 const Home = () => {
   const opParticipantes = React.useRef(null);
   const opRepertorio = React.useRef(null);
-  const navigate = useNavigate();
 
   const cardStyle = {
     backgroundColor: "#E5E4E4",
     width: 200,
     marginTop: 50,
   };
+
   const buttonStyle = {
     marginBottom: 20,
   };
@@ -40,16 +40,16 @@ const Home = () => {
       ],
       vocal: [
         {
-          name: "Rodrigo",
+          name: "Matheus",
         },
         {
-          name: "Miguel",
+          name: "Maria",
         },
         {
-          name: "João",
+          name: "Camila",
         },
         {
-          name: "Yasmim",
+          name: "Daniele",
         },
       ],
       musicas: [
@@ -78,14 +78,15 @@ const Home = () => {
       <div className="item content animeLeft">
         <div className="container">
           <div className={`${styles.header}`}>
-            <div className={styles.title}>
+            <div className="title">
               <h2>Novembro 2024</h2>
             </div>
 
-            <div className={styles.title}>
+            <div className="title">
               <Button label="Agendar escala" />
             </div>
           </div>
+
           <div className={styles.home}>
             {escalas.map((escala, index) => {
               <div key={index}>
@@ -141,22 +142,6 @@ const Home = () => {
           </div>
         </div>
       </div>
-
-      <div className="item sidenav">
-        <div className={styles.menu}>
-          <Button style={buttonStyle} onClick={() => navigate("/")}>
-            Escalas
-          </Button>
-          <Button style={buttonStyle} onClick={() => navigate("/repertorio")}>
-            Repertório
-          </Button>
-          <Button style={buttonStyle} onClick={() => navigate("/membros")}>
-            Membros
-          </Button>
-        </div>
-      </div>
-
-      <div className="item footer">footer</div>
     </>
   );
 };

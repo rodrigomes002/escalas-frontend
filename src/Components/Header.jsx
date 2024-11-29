@@ -7,6 +7,7 @@ import Button from "./Forms/Button";
 
 const Header = () => {
   const { data, userLogout } = React.useContext(UserContext);
+
   const styleLogo = {
     width: 50,
     height: 50,
@@ -20,17 +21,18 @@ const Header = () => {
           <Logo style={styleLogo} />
         </Link>
       </div>
+
       <div className="item nav">
-        {data ? (
-          <Link className={styles.login} to="/conta">
-            {data.nome}
-            <Button onclick={userLogout}></Button>
-          </Link>
-        ) : (
-          <Link className={styles.login} to="/login">
-            Login / Criar
-          </Link>
-        )}
+        <div className={styles.login}>
+          {data ? (
+            <Link to="/conta">
+              {data.nome}
+              <Button onclick={userLogout}></Button>
+            </Link>
+          ) : (
+            <Link to="/login">Login</Link>
+          )}
+        </div>
       </div>
     </>
   );

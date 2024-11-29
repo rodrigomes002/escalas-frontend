@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import styles from "./Members.module.css";
+import styles from "./Repertoire.module.css";
 import { Button } from "primereact/button";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
@@ -74,14 +74,14 @@ const Mermbers = () => {
         <div className="container">
           <div className={`${styles.header}`}>
             <div className="title">
-              <h2>Membros</h2>
+              <h2>Repertório</h2>
             </div>
 
             <div className="title">
-              <Button label="Novo Membro" onClick={() => setVisible(true)} />
+              <Button label="Nova música" onClick={() => setVisible(true)} />
 
               <Dialog
-                header="Novo membro"
+                header="Nova música"
                 visible={visible}
                 style={{ width: "25vw" }}
                 footer={

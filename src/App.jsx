@@ -8,6 +8,8 @@ import Login from "./Components/Login/Login";
 import { UserStorage } from "./UserContext";
 import { PrimeReactProvider, PrimeReactContext } from "primereact/api";
 import Mermbers from "./Components/Members";
+import Repertoire from "./Components/Repertoire";
+import Sidenav from "./Components/Sidenav";
 
 const App = () => {
   return (
@@ -16,9 +18,12 @@ const App = () => {
         <UserStorage>
           <div className="grid grid-template-areas">
             <Header />
+            <Sidenav />
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/membros" element={<Mermbers />} />
+              <Route path="/repertorio" element={<Repertoire />} />
+
               {/*<Route path="/login/*" element={<Login />} />*/}
             </Routes>
             <Footer />
