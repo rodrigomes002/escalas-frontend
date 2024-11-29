@@ -7,13 +7,20 @@ import Button from "./Forms/Button";
 
 const Header = () => {
   const { data, userLogout } = React.useContext(UserContext);
-
+  const styleLogo = {
+    width: 50,
+    height: 50,
+    fill: "#fff",
+    marginTop: 20,
+  };
   return (
-    <header className={styles.header}>
-      <nav className={`${styles.nav} container`}>
-        <Link className={styles.logo} to="/" aria-label="Escalas - Home">
-          <Logo />
+    <>
+      <div className="item logo">
+        <Link to="/" aria-label="Escalas - Home">
+          <Logo style={styleLogo} />
         </Link>
+      </div>
+      <div className="item nav">
         {data ? (
           <Link className={styles.login} to="/conta">
             {data.nome}
@@ -24,8 +31,8 @@ const Header = () => {
             Login / Criar
           </Link>
         )}
-      </nav>
-    </header>
+      </div>
+    </>
   );
 };
 

@@ -9,7 +9,7 @@ export const UserStorage = ({ children }) => {
   const [login, setLogin] = React.useState(null);
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(null);
-  const navidate = useNavigate();
+  const navigate = useNavigate();
 
   const userLogout = React.useCallback(
     async function () {
@@ -18,9 +18,9 @@ export const UserStorage = ({ children }) => {
       setLoading(false);
       setLogin(false);
       window.localStorage.removeItem("token");
-      navidate("/login");
+      navigate("/login");
     },
-    [navidate]
+    [navigate]
   );
 
   async function getUser(token) {
@@ -41,7 +41,7 @@ export const UserStorage = ({ children }) => {
       const { token } = await response.json();
       window.localStorage.setItem("token", token);
       await getUser(token);
-      navidate("/conta");
+      navigate("/conta");
     } catch (error) {
       setError(error.message);
       setLogin(false);

@@ -6,21 +6,26 @@ import Header from "./Components/Header";
 import Footer from "./Components/Footer";
 import Login from "./Components/Login/Login";
 import { UserStorage } from "./UserContext";
+import { PrimeReactProvider, PrimeReactContext } from "primereact/api";
+import Mermbers from "./Components/Members";
 
 const App = () => {
   return (
-    <div>
+    <PrimeReactProvider>
       <BrowserRouter>
         <UserStorage>
-          <Header />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/login/*" element={<Login />} />
-          </Routes>
-          <Footer />
+          <div className="grid grid-template-areas">
+            <Header />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/membros" element={<Mermbers />} />
+              {/*<Route path="/login/*" element={<Login />} />*/}
+            </Routes>
+            <Footer />
+          </div>
         </UserStorage>
       </BrowserRouter>
-    </div>
+    </PrimeReactProvider>
   );
 };
 
