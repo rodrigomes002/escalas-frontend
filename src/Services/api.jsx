@@ -6,7 +6,8 @@ export function GET_MUSICAS() {
     options: {
       method: "GET",
       headers: {
-        Authorization: "Bearer token",
+        Authorization:
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwidW5pcXVlX25hbWUiOiJzdHJpbmciLCJleHAiOjE3MzM1MTgxODF9.Fod79-CdBbynfAdDL2lI7dXbbfpNefchnFUZr-jbfb4",
       },
     },
   };
@@ -18,7 +19,8 @@ export function GET_MUSICOS() {
     options: {
       method: "GET",
       headers: {
-        Authorization: "Bearer token",
+        Authorization:
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwidW5pcXVlX25hbWUiOiJzdHJpbmciLCJleHAiOjE3MzM1MTgxODF9.Fod79-CdBbynfAdDL2lI7dXbbfpNefchnFUZr-jbfb4",
       },
     },
   };
@@ -31,7 +33,37 @@ export function POST_MEMBRO(body) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "Bearer token",
+        Authorization:
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwidW5pcXVlX25hbWUiOiJzdHJpbmciLCJleHAiOjE3MzM1MTgxODF9.Fod79-CdBbynfAdDL2lI7dXbbfpNefchnFUZr-jbfb4",
+      },
+      body: JSON.stringify(body),
+    },
+  };
+}
+
+export function DELETE_MEMBRO(id) {
+  return {
+    url: API_URL + "api/musicos/" + id,
+    options: {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization:
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwidW5pcXVlX25hbWUiOiJzdHJpbmciLCJleHAiOjE3MzM1MTgxODF9.Fod79-CdBbynfAdDL2lI7dXbbfpNefchnFUZr-jbfb4",
+      },
+    },
+  };
+}
+
+export function PUT_MEMBRO(body, id) {
+  return {
+    url: API_URL + "api/musicos/" + id,
+    options: {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization:
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwidW5pcXVlX25hbWUiOiJzdHJpbmciLCJleHAiOjE3MzM1MTgxODF9.Fod79-CdBbynfAdDL2lI7dXbbfpNefchnFUZr-jbfb4",
       },
       body: JSON.stringify(body),
     },
