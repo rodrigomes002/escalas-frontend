@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from "react";
+import useFetch from "../Hooks/useFetch";
+import Error from "../Components/Helper/Error";
 import { Button } from "primereact/button";
 import { GET_MUSICOS, POST_MEMBRO } from "../Services/api";
-import useFetch from "../Hooks/useFetch";
 import { Dialog } from "primereact/dialog";
 import { InputText } from "primereact/inputtext";
 import { Dropdown } from "primereact/dropdown";
 
 const Membros = () => {
+  const [error, setError] = useState(null);
+  const [nome, setNome] = useState("");
+  const [funcao, setFuncao] = useState("");
+
   const { request } = useFetch();
+
   const [musicos, setMusicos] = useState([]);
   const [visible, setVisible] = useState(false);
-  const [nome, setNome] = useState(null);
-  const [funcao, setFuncao] = useState(null);
 
   const funcoes = [
     { name: "Vocal", code: "1" },
@@ -36,7 +40,23 @@ const Membros = () => {
     fetchMusicos();
   }, [request, setMusicos]);
 
-  function handleSubmit() {
+  function validate(value) {
+    if (value.length === 0) {
+      setError("Preencha o valor.");
+      return;
+    }
+
+    setError(null);
+  }
+
+  function clean() {
+    setNome("");
+    setFuncao(null);
+    setError(null);
+  }
+
+  async function handleSubmit(event) {
+    event.preventDefault();
     const token = window.localStorage.getItem("token");
 
     let obj = {
@@ -45,17 +65,22 @@ const Membros = () => {
       instrumento: parseInt(funcao.code),
     };
 
-    console.log(obj);
+    validate(nome);
+    validate(funcao);
 
     const { url, options } = POST_MEMBRO(obj);
-    request(url, options);
+    const { response } = await request(url, options);
+    if (response.ok) {
+      clean();
+      setVisible(false);
+    }
   }
 
   return (
     <>
       <div className="flex-end mb">
         <div>
-          <Button onClick={() => setVisible(true)}>Novo membro</Button>
+          <Button icon="pi pi-plus" onClick={() => setVisible(true)}></Button>
 
           <Dialog
             header="Novo membro"
@@ -64,31 +89,17 @@ const Membros = () => {
               if (!visible) return;
               setVisible(false);
             }}
-            footer={
-              <div className="mt">
-                <Button
-                  label="Limpar"
-                  icon="pi pi-times"
-                  onClick={() => setVisible(false)}
-                  className="p-button-text"
-                />
-                <Button
-                  label="Salvar"
-                  icon="pi pi-check"
-                  onClick={() => handleSubmit()}
-                  autoFocus
-                />
-              </div>
-            }
             className="modal"
           >
-            <form>
+            <form onSubmit={handleSubmit}>
               <div className="flex flex-column gap-2 mb mt">
                 <label htmlFor="nome">Nome</label>
                 <InputText
                   id="nome"
-                  onChange={(e) => setNome(e.target.value)}
+                  value={nome}
                   aria-describedby="nome-help"
+                  onChange={(e) => setNome(e.target.value)}
+                  onBlur={(e) => validate(e.target.value)}
                 />
               </div>
 
@@ -96,11 +107,22 @@ const Membros = () => {
                 <label>Função</label>
                 <Dropdown
                   value={funcao}
-                  onChange={(e) => setFuncao(e.value)}
                   options={funcoes}
                   optionLabel="name"
                   placeholder="Selecione a função"
+                  onChange={(e) => setFuncao(e.value)}
+                  onBlur={(e) => validate(e.value)}
                 />
+              </div>
+              {error && <Error error={error} />}
+              <div className="mt">
+                <Button
+                  label="Limpar"
+                  icon="pi pi-times"
+                  className="p-button-text"
+                  onClick={clean}
+                />
+                <Button label="Salvar" icon="pi pi-check" autoFocus />
               </div>
             </form>
           </Dialog>
@@ -108,7 +130,26 @@ const Membros = () => {
       </div>
       {musicos.map((musico) => (
         <div className="box mb">
-          {musico.nome} - {getFuncoes(musico.instrumento)}
+          <div className="flex">
+            <div>
+              <h3>{musico.nome}</h3>
+
+              <p>{getFuncoes(musico.instrumento)}</p>
+            </div>
+
+            <div className="flex-end">
+              <Button
+                icon="pi pi-pencil"
+                onClick={() => setVisible(false)}
+                className="p-button-text"
+              />
+              <Button
+                icon="pi pi-trash"
+                onClick={() => setVisible(false)}
+                className="p-button-text"
+              />
+            </div>
+          </div>
         </div>
       ))}
     </>

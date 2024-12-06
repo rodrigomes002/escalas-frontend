@@ -40,7 +40,7 @@ li {
 
 .box {
   padding: var(--gap);
-  border-radius: var(--gap);
+  border-radius: var(--gap-s);
   background: var(--color-6);
 }
 
