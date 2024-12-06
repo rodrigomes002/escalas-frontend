@@ -13,15 +13,12 @@ import { InputText } from "primereact/inputtext";
 import { Dropdown } from "primereact/dropdown";
 
 const Membros = () => {
+  const { request } = useFetch();
   const [nome, setNome] = useState("");
   const [funcao, setFuncao] = useState(null);
   const [id, setId] = useState(null);
   const [error, setError] = useState(null);
-
   const [isUpdate, setIsUpdate] = useState(false);
-
-  const { request } = useFetch();
-
   const [musicos, setMusicos] = useState([]);
   const [visible, setVisible] = useState(false);
 
@@ -34,146 +31,122 @@ const Membros = () => {
     { name: "Bateria", code: "6" },
   ];
 
-  function getFuncoes(instrumento) {
-    return funcoes.find((f) => parseInt(f.code) === instrumento).name;
-  }
-
-  function getFuncao(instrumento) {
-    const funcao = funcoes.find((f) => f.code === instrumento);
-    return funcao;
-  }
-
   useEffect(() => {
     fetchMusicos();
   }, []);
 
-  async function fetchMusicos() {
+  const fetchMusicos = async () => {
     const { url, options } = GET_MUSICOS();
     const { json } = await request(url, options);
     setMusicos(json);
-  }
+  };
 
-  function validate(value) {
-    if (value === undefined || value.length === 0) {
+  const getFuncao = (instrumento) =>
+    funcoes.find((f) => f.code === instrumento);
+
+  const validate = (value) => {
+    if (!value) {
       setError("Preencha o valor.");
       return false;
     }
-
     setError(null);
     return true;
-  }
+  };
 
-  function clean() {
+  const clean = () => {
     setNome("");
-    setFuncao("");
+    setFuncao(null);
     setError(null);
-  }
+  };
 
-  async function handleSubmit(event) {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
-    let obj = {
-      id: 0,
-      nome: nome,
+    if (!validate(nome) || !validate(funcao)) return;
+
+    const membro = {
+      id: isUpdate ? id : 0,
+      nome,
       instrumento: parseInt(funcao.code),
     };
 
-    if (validate(nome) && validate(funcao)) {
-      if (isUpdate) {
-        const { url, options } = PUT_MEMBRO(obj, id);
-        const { response } = await request(url, options);
-        if (response.ok) {
-          fetchMusicos();
-          clean();
-          setVisible(false);
-        }
-        return;
-      }
-
-      const { url, options } = POST_MEMBRO(obj);
-      const { response } = await request(url, options);
-      if (response.ok) {
-        fetchMusicos();
-        clean();
-        setVisible(false);
-      }
-    }
-  }
-
-  async function deleteMembro(id) {
-    const { url, options } = DELETE_MEMBRO(id);
+    const action = isUpdate ? PUT_MEMBRO(membro, id) : POST_MEMBRO(membro);
+    const { url, options } = action;
     const { response } = await request(url, options);
+
     if (response.ok) {
       fetchMusicos();
+      clean();
+      setVisible(false);
     }
-  }
+  };
 
-  async function updateMembro(membro) {
+  const deleteMembro = async (id) => {
+    const { url, options } = DELETE_MEMBRO(id);
+    const { response } = await request(url, options);
+    if (response.ok) fetchMusicos();
+  };
+
+  const updateMembro = (membro) => {
     setVisible(true);
     setNome(membro.nome);
-    let funcao = getFuncao(membro.instrumento.toString());
-    setFuncao(funcao);
+    setFuncao(getFuncao(membro.instrumento.toString()));
     setId(membro.id);
     setIsUpdate(true);
-  }
+  };
 
   return (
     <>
       <div className="flex-end mb">
-        <div>
-          <Button icon="pi pi-plus" onClick={() => setVisible(true)}></Button>
+        <Button icon="pi pi-plus" onClick={() => setVisible(true)} />
+        <Dialog
+          header="Novo membro"
+          visible={visible}
+          onHide={() => setVisible(false)}
+          className="modal"
+        >
+          <form onSubmit={handleSubmit}>
+            <div className="flex flex-column gap-2 mb mt">
+              <label htmlFor="nome">Nome</label>
+              <InputText
+                id="nome"
+                value={nome}
+                onChange={(e) => setNome(e.target.value)}
+                onBlur={(e) => validate(e.target.value)}
+              />
+            </div>
 
-          <Dialog
-            header="Novo membro"
-            visible={visible}
-            onHide={() => {
-              if (!visible) return;
-              setVisible(false);
-            }}
-            className="modal"
-          >
-            <form onSubmit={handleSubmit}>
-              <div className="flex flex-column gap-2 mb mt">
-                <label htmlFor="nome">Nome</label>
-                <InputText
-                  id="nome"
-                  value={nome}
-                  aria-describedby="nome-help"
-                  onChange={(e) => setNome(e.target.value)}
-                  onBlur={(e) => validate(e.target.value)}
-                />
-              </div>
+            <div className="flex flex-column gap-2">
+              <label>Função</label>
+              <Dropdown
+                value={funcao}
+                options={funcoes}
+                optionLabel="name"
+                placeholder="Selecione a função"
+                onChange={(e) => setFuncao(e.value)}
+                onBlur={(e) => validate(e.value)}
+              />
+            </div>
 
-              <div className="flex flex-column gap-2">
-                <label>Função</label>
-                <Dropdown
-                  value={funcao}
-                  options={funcoes}
-                  optionLabel="name"
-                  placeholder="Selecione a função"
-                  onChange={(e) => setFuncao(e.value)}
-                  onBlur={(e) => validate(e.value)}
-                />
-              </div>
-              {error && <Error error={error} />}
-              <div className="mt">
-                {isUpdate ? (
-                  <Button label="Atualizar" icon="pi pi-check" autoFocus />
-                ) : (
-                  <Button label="Salvar" icon="pi pi-check" autoFocus />
-                )}
-              </div>
-            </form>
-          </Dialog>
-        </div>
+            {error && <Error error={error} />}
+
+            <div className="mt">
+              <Button
+                label={isUpdate ? "Atualizar" : "Salvar"}
+                icon="pi pi-check"
+                autoFocus
+              />
+            </div>
+          </form>
+        </Dialog>
       </div>
+
       {musicos.map((musico) => (
-        <div className="box mb">
+        <div key={musico.id} className="box mb">
           <div className="flex">
             <div>
               <h3>{musico.nome}</h3>
-
-              <p>{getFuncoes(musico.instrumento)}</p>
+              <p>{getFuncao(musico.instrumento.toString()).name}</p>
             </div>
 
             <div className="flex-end">
