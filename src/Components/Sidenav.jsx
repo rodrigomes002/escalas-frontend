@@ -1,31 +1,35 @@
 import React from "react";
-import { Button } from "primereact/button";
-import { useNavigate } from "react-router-dom";
-import styles from "./Sidenav.module.css";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { ReactComponent as Logo } from "../Assets/logo.svg";
 
 const Sidenav = () => {
-  const navigate = useNavigate();
-
-  const buttonStyle = {
-    marginBottom: 20,
+  const styleLogo = {
+    width: 50,
+    height: 50,
+    fill: "#fff",
+    marginTop: 20,
   };
 
   return (
-    <>
-      <div className="item sidenav">
-        <div className={styles.menu}>
-          <Button style={buttonStyle} onClick={() => navigate("/")}>
-            Escalas
-          </Button>
-          <Button style={buttonStyle} onClick={() => navigate("/repertorio")}>
-            Repertório
-          </Button>
-          <Button style={buttonStyle} onClick={() => navigate("/membros")}>
-            Membros
-          </Button>
-        </div>
-      </div>
-    </>
+    <nav className="sidenav box bg-3">
+      <Link to="/" aria-label="Escalas - Home">
+        <Logo style={styleLogo} />
+      </Link>
+      <ul>
+        <li>
+          <span>{/*icon*/}</span>
+          <NavLink to="/">Escalas</NavLink>
+        </li>
+        <li>
+          <span>{/*icon*/}</span>
+          <NavLink to="/repertorio">Repertorio</NavLink>
+        </li>
+        <li>
+          <span>{/*icon*/}</span>
+          <NavLink to="/membros">Membros</NavLink>
+        </li>
+      </ul>
+    </nav>
   );
 };
 
