@@ -6,8 +6,7 @@ export function GET_MUSICAS() {
     options: {
       method: "GET",
       headers: {
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI3IiwidW5pcXVlX25hbWUiOiJyb2RyaWdvIiwiZXhwIjoxNzMzNDUwNDkwfQ.TGgFMXwT0_eWeBwSQETWEGhdXRxNkjKswU03xqgjGwE",
+        Authorization: "Bearer token",
       },
     },
   };
@@ -19,8 +18,7 @@ export function GET_MUSICOS() {
     options: {
       method: "GET",
       headers: {
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI3IiwidW5pcXVlX25hbWUiOiJyb2RyaWdvIiwiZXhwIjoxNzMzNDUwNDkwfQ.TGgFMXwT0_eWeBwSQETWEGhdXRxNkjKswU03xqgjGwE",
+        Authorization: "Bearer token",
       },
     },
   };
@@ -33,8 +31,7 @@ export function POST_MEMBRO(body) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI3IiwidW5pcXVlX25hbWUiOiJyb2RyaWdvIiwiZXhwIjoxNzMzNDUwNDkwfQ.TGgFMXwT0_eWeBwSQETWEGhdXRxNkjKswU03xqgjGwE",
+        Authorization: "Bearer token",
       },
       body: JSON.stringify(body),
     },
