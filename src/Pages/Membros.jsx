@@ -3,11 +3,11 @@ import useFetch from "../Hooks/useFetch";
 import Error from "../Components/Helper/Error";
 import { Button } from "primereact/button";
 import {
-  DELETE_MEMBRO,
-  GET_MUSICOS,
-  POST_MEMBRO,
-  PUT_MEMBRO,
-} from "../Services/api";
+  MUSICOS_DELETE,
+  MUSICOS_GET,
+  MUSICOS_POST,
+  MUSICOS_PUT,
+} from "../Services/ApiMusicos";
 import { Dialog } from "primereact/dialog";
 import { InputText } from "primereact/inputtext";
 import { Dropdown } from "primereact/dropdown";
@@ -36,13 +36,12 @@ const Membros = () => {
   }, []);
 
   const fetchMusicos = async () => {
-    const { url, options } = GET_MUSICOS();
+    const { url, options } = MUSICOS_GET();
     const { json } = await request(url, options);
     setMusicos(json);
   };
 
-  const getFuncao = (instrumento) =>
-    funcoes.find((f) => f.code === instrumento);
+  const getFuncao = (funcao) => funcoes.find((f) => f.code === funcao);
 
   const validate = (value) => {
     if (!value) {
@@ -53,10 +52,16 @@ const Membros = () => {
     return true;
   };
 
-  const clean = () => {
+  const cleanForm = () => {
     setNome("");
     setFuncao(null);
     setError(null);
+    setIsUpdate(false);
+  };
+
+  const closeModal = () => {
+    cleanForm();
+    setVisible(false);
   };
 
   const handleSubmit = async (event) => {
@@ -67,22 +72,22 @@ const Membros = () => {
     const membro = {
       id: isUpdate ? id : 0,
       nome,
-      instrumento: parseInt(funcao.code),
+      funcao: parseInt(funcao.code),
     };
 
-    const action = isUpdate ? PUT_MEMBRO(membro, id) : POST_MEMBRO(membro);
+    const action = isUpdate ? MUSICOS_PUT(membro, id) : MUSICOS_POST(membro);
     const { url, options } = action;
     const { response } = await request(url, options);
 
     if (response.ok) {
       fetchMusicos();
-      clean();
-      setVisible(false);
+      cleanForm();
+      closeModal();
     }
   };
 
   const deleteMembro = async (id) => {
-    const { url, options } = DELETE_MEMBRO(id);
+    const { url, options } = MUSICOS_DELETE(id);
     const { response } = await request(url, options);
     if (response.ok) fetchMusicos();
   };
@@ -90,7 +95,7 @@ const Membros = () => {
   const updateMembro = (membro) => {
     setVisible(true);
     setNome(membro.nome);
-    setFuncao(getFuncao(membro.instrumento.toString()));
+    setFuncao(getFuncao(membro.funcao.toString()));
     setId(membro.id);
     setIsUpdate(true);
   };
@@ -102,7 +107,7 @@ const Membros = () => {
         <Dialog
           header="Novo membro"
           visible={visible}
-          onHide={() => setVisible(false)}
+          onHide={() => closeModal()}
           className="modal"
         >
           <form onSubmit={handleSubmit}>
@@ -130,7 +135,7 @@ const Membros = () => {
 
             {error && <Error error={error} />}
 
-            <div className="mt">
+            <div className="flex-end mt">
               <Button
                 label={isUpdate ? "Atualizar" : "Salvar"}
                 icon="pi pi-check"
@@ -140,30 +145,35 @@ const Membros = () => {
           </form>
         </Dialog>
       </div>
+      {musicos.length > 0 ? (
+        musicos.map((musico) => (
+          <div key={musico.id} className="box mb">
+            <div className="flex">
+              <div>
+                <h3>{musico.nome}</h3>
+                <p>{getFuncao(musico.funcao.toString()).name}</p>
+              </div>
 
-      {musicos.map((musico) => (
-        <div key={musico.id} className="box mb">
-          <div className="flex">
-            <div>
-              <h3>{musico.nome}</h3>
-              <p>{getFuncao(musico.instrumento.toString()).name}</p>
-            </div>
-
-            <div className="flex-end">
-              <Button
-                icon="pi pi-pencil"
-                onClick={() => updateMembro(musico)}
-                className="p-button-text"
-              />
-              <Button
-                icon="pi pi-trash"
-                onClick={() => deleteMembro(musico.id)}
-                className="p-button-text"
-              />
+              <div className="flex-end">
+                <Button
+                  icon="pi pi-pencil"
+                  onClick={() => updateMembro(musico)}
+                  className="p-button-text"
+                />
+                <Button
+                  icon="pi pi-trash"
+                  onClick={() => deleteMembro(musico.id)}
+                  className="p-button-text"
+                />
+              </div>
             </div>
           </div>
+        ))
+      ) : (
+        <div className=" box flex">
+          <p>Nenhum membro cadastrado.</p>
         </div>
-      ))}
+      )}
     </>
   );
 };

@@ -106,6 +106,14 @@ li {
   grid-template-columns: 240px auto;
 }
 
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #f4f4f4;
+}
+
 /* sidenav */
 
 .sidenav {

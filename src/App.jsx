@@ -8,20 +8,40 @@ import Membros from "./Pages/Membros";
 import Repertorio from "./Pages/Repertorio";
 import Sidenav from "./Components/Sidenav";
 import "./Styles.css";
+import Login from "./Pages/Login";
+import ProtectedRoute from "./Components/Helper/ProtectedRoute";
 
 const App = () => {
   return (
     <PrimeReactProvider>
       <BrowserRouter>
         <UserStorage>
+          <Routes>
+            <Route path="/login/*" element={<Login />} />
+          </Routes>
           <div className="container">
             <Sidenav />
             <main>
               <Header />
               <Routes>
                 <Route path="/" element={<Escalas />} />
-                <Route path="/membros" element={<Membros />} />
-                <Route path="/repertorio" element={<Repertorio />} />
+
+                <Route
+                  path="/membros"
+                  element={
+                    <ProtectedRoute>
+                      <Membros />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/repertorio"
+                  element={
+                    <ProtectedRoute>
+                      <Repertorio />
+                    </ProtectedRoute>
+                  }
+                />
               </Routes>
             </main>
           </div>
