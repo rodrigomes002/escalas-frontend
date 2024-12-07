@@ -43,7 +43,7 @@ const Login = () => {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="p-inputtext p-component"
+              className="p-inputtext p-component mb"
               style={{ width: "100%" }}
             />
           </div>

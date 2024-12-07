@@ -1,11 +1,23 @@
 import React from "react";
 import { UserContext } from "../Context/UserContext";
+import { Button } from "primereact/button";
+import { useNavigate } from "react-router-dom";
 
 const ProximasEscalas = () => {
+  const navigate = useNavigate();
   const { login } = React.useContext(UserContext);
   return (
     !login && (
       <div className="proximas-escalas-container">
+        <div className="flex-end mb mt">
+          <Button
+            label="Login"
+            onClick={() => navigate("/login")}
+            icon="pi pi-check"
+            autoFocus
+          />
+        </div>
+
         <header className="mb">
           <h1 className="box bg-6">Próximas escalas</h1>
         </header>
