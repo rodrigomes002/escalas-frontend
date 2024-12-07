@@ -114,6 +114,19 @@ li {
   background: #f4f4f4;
 }
 
+.no-login-container {
+  display: grid;
+  padding: var(--gap);
+  gap: var(--gap);
+  grid-template-columns: auto;
+}
+
+.proximas-escalas-container {
+  margin: 0 auto;
+  margin-top: 25px;
+  max-width: 80vw;
+}
+
 /* sidenav */
 
 .sidenav {

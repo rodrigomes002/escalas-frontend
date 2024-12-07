@@ -1,7 +1,7 @@
 import { Button } from "primereact/button";
 import React from "react";
 
-const Home = () => {
+const Escalas = () => {
   return (
     <>
       <div className="flex-end mb">
@@ -58,4 +58,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Escalas;

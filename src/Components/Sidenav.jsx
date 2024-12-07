@@ -16,7 +16,7 @@ const Sidenav = () => {
   return (
     login && (
       <nav className="sidenav box bg-3">
-        <Link to="/" aria-label="Escalas - Home">
+        <Link to="/escalas" aria-label="Escalas - Home">
           <Logo style={styleLogo} />
         </Link>
         <ul>
@@ -24,7 +24,7 @@ const Sidenav = () => {
             <span>
               <i className="pi pi-calendar"></i>
             </span>
-            <NavLink to="/">Escalas</NavLink>
+            <NavLink to="/escalas">Escalas</NavLink>
           </li>
           <li>
             <span>

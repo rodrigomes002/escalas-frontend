@@ -52,7 +52,7 @@ export const UserStorage = ({ children }) => {
       const { token } = await response.json();
       window.localStorage.setItem("token", token);
       setLogin(true);
-      navigate("/");
+      navigate("/escalas");
     } catch (error) {
       setError(error.message);
       console.log(error);
