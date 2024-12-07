@@ -1,4 +1,4 @@
-export const API_URL = "http://ec2-3-80-208-160.compute-1.amazonaws.com/";
+export const API_URL = "http://ec2-3-80-208-160.compute-1.amazonaws.com:5001/";
 
 export function GET(url, token) {
   return {
